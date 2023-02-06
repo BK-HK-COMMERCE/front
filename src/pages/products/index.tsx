@@ -1,9 +1,11 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import ProductItem from '../../components/products/item';
 import { fetcher, QueryKeys } from '../../queryClient';
+import { Product } from '../../types';
 
 const ProductsPage = () => {
-  const { data, isLoading } = useQuery(QueryKeys.PRODUCTS, () =>
+  const { data, isLoading } = useQuery<Product[]>(QueryKeys.PRODUCTS, () =>
     fetcher({
       method: 'GET',
       path: '/products',
@@ -15,7 +17,15 @@ const ProductsPage = () => {
   }
 
   console.log(data);
-  return <div>상품 조회 페이지</div>;
+  return (
+    <div>
+      <ul>
+        {data?.map((product) => (
+          <ProductItem {...product} key={product.id} />
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default ProductsPage;
