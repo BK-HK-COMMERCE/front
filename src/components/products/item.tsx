@@ -1,23 +1,59 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Product } from '../../types';
+import styled from '@emotion/styled';
 
-export default function ProductItem({
-  category,
-  description,
-  id,
-  image,
-  price,
-  rating,
-  title,
-}: Product) {
+const ItemBox = styled.li`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  position: relative;
+  border: 1px solid black;
+  padding: 16px;
+
+  & img {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+  }
+`;
+
+const ItemTitle = styled.div`
+  font-size: 0.75rem;
+  color: black;
+  cursor: pointer;
+`;
+
+const LinkBox = styled(Link)`
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ItemPrice = styled.div`
+  font-size: 0.8rem;
+  font-weight: 600;
+`;
+
+const DescriptionBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+`;
+
+export default function ProductItem({ id, image, price, title }: Product) {
   return (
-    <li>
-      <p>{category}</p>
-      <p>{title}</p>
-      <p>{description}</p>
-      <img src={image} alt="product image" />
-      <span>${price}</span>
-      <span>{rating.rate}</span>
-    </li>
+    <ItemBox>
+      <img src={image} alt="product" />
+      <DescriptionBox>
+        <ItemTitle>
+          <LinkBox to={`/products/${id}`}>{title}</LinkBox>
+        </ItemTitle>
+        <ItemPrice>${price}</ItemPrice>
+      </DescriptionBox>
+    </ItemBox>
   );
 }
