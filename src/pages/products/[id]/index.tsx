@@ -45,7 +45,11 @@ const ProductDetailPage = () => {
     return <div>Loading...</div>;
   }
 
-  const { category, title, image, price, rating, description } = data;
+  if (!data) {
+    return null;
+  }
+
+  const { title, image, price, description } = data;
 
   return (
     <Container>
