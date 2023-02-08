@@ -1,4 +1,6 @@
 import { QueryClient } from 'react-query';
+import { request } from 'graphql-request';
+import { RequestDocument } from 'graphql-request/dist/types';
 
 type AnyOBJ = { [key: string]: any };
 
@@ -22,7 +24,8 @@ export const getClient = () => {
   return client;
 };
 
-const BASE_URL = 'https://fakestoreapi.com';
+// const BASE_URL = 'https://fakestoreapi.com';
+const BASE_URL = '/';
 
 export const fetcher = async ({
   method,
@@ -59,6 +62,9 @@ export const fetcher = async ({
     console.error(err);
   }
 };
+
+export const graphqlFetcher = (query: RequestDocument, variables = {}) =>
+  request(BASE_URL, query, variables);
 
 export const QueryKeys = {
   PRODUCTS: 'products',

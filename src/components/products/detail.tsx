@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Product } from '../../types';
+import { Product } from '../../graphql/products';
 
 const Container = styled.div`
   display: grid;
@@ -30,11 +30,11 @@ const Price = styled.div`
   margin-bottom: 16px;
 `;
 
-const ProductDetail = ({ image, title, price, description }: Product) => {
+const ProductDetail = ({ imageUrl, title, price, description }: Product) => {
   return (
     <Container>
       <ImageBox>
-        <img src={image} alt="Detail"></img>
+        <img src={imageUrl} alt="Detail"></img>
       </ImageBox>
       <DescriptionBox>
         <Title>{title}</Title>

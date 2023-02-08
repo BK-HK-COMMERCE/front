@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../types';
+import { Product } from '../../graphql/products';
 import styled from '@emotion/styled';
 
 const ItemBox = styled.li`
@@ -44,10 +44,10 @@ const DescriptionBox = styled.div`
   row-gap: 0.5rem;
 `;
 
-export default function ProductItem({ id, image, price, title }: Product) {
+export default function ProductItem({ id, imageUrl, price, title }: Product) {
   return (
     <ItemBox>
-      <img src={image} alt="product" />
+      <img src={imageUrl} alt="product" />
       <DescriptionBox>
         <ItemTitle>
           <LinkBox to={`/products/${id}`}>{title}</LinkBox>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import ProductItem from '../../components/products/item';
-import { fetcher, QueryKeys } from '../../queryClient';
-import { Product } from '../../types';
+import { graphqlFetcher, QueryKeys } from '../../queryClient';
 import styled from '@emotion/styled';
+import { GET_PRODUCTS, Products } from '../../graphql/products';
 
 const Container = styled.div`
   display: grid;
@@ -24,18 +24,20 @@ const ProductBox = styled.ul`
 `;
 
 const ProductsPage = () => {
-  const { data, isLoading } = useQuery<Product[]>(QueryKeys.PRODUCTS, () =>
-    fetcher({
-      method: 'GET',
-      path: '/products',
-    })
+  const { data, isLoading, isError } = useQuery<Products>(
+    QueryKeys.PRODUCTS,
+    () => graphqlFetcher(GET_PRODUCTS)
   );
 
   if (isLoading) {
     return <div>Loading..</div>;
   }
 
-  console.log(data);
+  if (isError) {
+    <div>Error...</div>;
+  }
+
+  console.log(data?.products);
   return (
     <>
       <Container>
@@ -54,7 +56,7 @@ const ProductsPage = () => {
         <div>
           <h1>모두보기</h1>
           <ProductBox>
-            {data?.map((product) => (
+            {data?.products.map((product) => (
               <ProductItem {...product} key={product.id} />
             ))}
           </ProductBox>

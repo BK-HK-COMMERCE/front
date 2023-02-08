@@ -1,6 +1,8 @@
 import { gql } from 'graphql-tag';
 
-export type PRODUCT = {
+// 쿼리, 타입 정의
+
+export type Product = {
   id: number;
   imageUrl: string;
   price: number;
@@ -9,7 +11,11 @@ export type PRODUCT = {
   createdAt: string;
 };
 
-const GET_PRODUCTS = gql`
+export type Products = {
+  products: Product[];
+};
+
+export const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
     id
     imageUrl
@@ -20,4 +26,15 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-export default GET_PRODUCTS;
+export const GET_PRODUCT = gql`
+  query GET_PRODUCT($id: string) {
+    GET_PRODUCT(id: $id) {
+      id
+      imageUrl
+      price
+      title
+      description
+      createAt
+    }
+  }
+`;
