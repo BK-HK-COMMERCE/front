@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../../graphql/products';
 import styled from '@emotion/styled';
+import { useRecoilState } from 'recoil';
+import { cartItemSelector } from '../../recoils/cart';
 
 const ItemBox = styled.li`
   display: flex;
@@ -45,6 +47,8 @@ const DescriptionBox = styled.div`
 `;
 
 export default function ProductItem({ id, imageUrl, price, title }: Product) {
+  const [cartAmount, setCartAmount] = useRecoilState(cartItemSelector(`${id}`));
+  const addToCart = () => setCartAmount((prev) => (prev || 0) + 1);
   return (
     <ItemBox>
       <img src={imageUrl} alt="product" />
@@ -53,6 +57,8 @@ export default function ProductItem({ id, imageUrl, price, title }: Product) {
           <LinkBox to={`/products/${id}`}>{title}</LinkBox>
         </ItemTitle>
         <ItemPrice>${price}</ItemPrice>
+        <button onClick={addToCart}>담기</button>
+        <span>{cartAmount}</span>
       </DescriptionBox>
     </ItemBox>
   );

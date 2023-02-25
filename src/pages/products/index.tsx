@@ -37,7 +37,6 @@ const ProductsPage = () => {
     <div>Error...</div>;
   }
 
-  console.log(data?.products);
   return (
     <>
       <Container>
