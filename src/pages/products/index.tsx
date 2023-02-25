@@ -6,6 +6,8 @@ import styled from '@emotion/styled';
 import { GET_PRODUCTS, Products } from '../../graphql/products';
 
 const Container = styled.div`
+  width: 1200px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 20% 80%;
 `;
