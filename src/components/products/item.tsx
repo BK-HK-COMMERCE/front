@@ -4,6 +4,9 @@ import { Product } from '../../graphql/products';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { cartItemSelector } from '../../recoils/cart';
+import { useQuery, useMutation } from 'react-query';
+import { graphqlFetcher, QueryKeys } from '../../queryClient';
+import { ADD_CART } from '../../graphql/cart';
 
 const ItemBox = styled.li`
   display: flex;
@@ -47,8 +50,12 @@ const DescriptionBox = styled.div`
 `;
 
 export default function ProductItem({ id, imageUrl, price, title }: Product) {
-  const [cartAmount, setCartAmount] = useRecoilState(cartItemSelector(`${id}`));
-  const addToCart = () => setCartAmount((prev) => (prev || 0) + 1);
+  // const [cartAmount, setCartAmount] = useRecoilState(cartItemSelector(`${id}`));
+  // const addToCart = () => setCartAmount((prev) => (prev || 0) + 1);
+
+  const { mutate: addCart } = useMutation([QueryKeys.CART, id], (id: number) =>
+    graphqlFetcher(ADD_CART, { id })
+  );
   return (
     <ItemBox>
       <img src={imageUrl} alt="product" />
@@ -57,8 +64,7 @@ export default function ProductItem({ id, imageUrl, price, title }: Product) {
           <LinkBox to={`/products/${id}`}>{title}</LinkBox>
         </ItemTitle>
         <ItemPrice>${price}</ItemPrice>
-        <button onClick={addToCart}>담기</button>
-        <span>{cartAmount}</span>
+        <button onClick={() => addCart(id)}>담기</button>
       </DescriptionBox>
     </ItemBox>
   );
