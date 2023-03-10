@@ -57,7 +57,7 @@ const Gnb = () => {
         </Logo>
 
         <UserMenu>
-          <div>로그인</div>
+          <Link to="/login">로그인</Link>
           <Link to="/cart">장바구니</Link>
         </UserMenu>
       </Header>
